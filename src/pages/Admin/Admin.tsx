@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import {
     AdminContainer,
     AdminHeader,
@@ -34,8 +34,7 @@ const Admin = () => {
     });
 
     const editDevice = async (id: string) => {
-        setActiveComponent("NovoDevice");
-        console.log("id", id);
+
         try {
             const response = await axios.get(`${BASE_URL}/getByid/${id}`);
             setDevice({
@@ -46,11 +45,14 @@ const Admin = () => {
                 doorTime: response.data.doorTime,
                 image: response.data.image,
             });
+            console.log("id", id);
+            setActiveComponent("NovoDevice");
         } catch (err) {
             console.log(err);
         } finally {
             console.log(false);
         }
+        
     };
 
     const renderComponent = () => {
