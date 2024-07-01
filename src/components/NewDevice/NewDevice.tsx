@@ -1,0 +1,284 @@
+import React, { createRef, useEffect, useState } from "react";
+import {
+    FormContainer,
+    FormTitulo,
+    FormLabel,
+    FormInput,
+    FormTextarea,
+    FormButton,
+} from "./styled";
+import axios from "axios";
+import { BASE_URL } from "../../utils/baseUrl";
+import toast from "react-hot-toast";
+import { useClerk } from "@clerk/clerk-react";
+import {
+    AddHourButton,
+    CustomContainer,
+    DeleteButton,
+    Message,
+} from "../MyDevices/styled";
+import { FaPlus, FaTimes } from "react-icons/fa";
+
+import { DeviceData } from "@/pages/Admin/Admin";
+import ImageUpload from "../ImageUpload/ImageUpload";
+
+interface NewDeviceProps {
+    email?: string;
+    name: string;
+    description: string;
+    image: string;
+    hourFeed: string[];
+    doorTime: string;
+}
+
+interface NovoDeviceProps {
+    deviceForm: DeviceData | null; // deviceForm pode ser um dispositivo ou null
+}
+
+const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
+    const [profileImage, setProfileImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+    const [device, setDevice] = useState<NewDeviceProps>({
+        email: "",
+        name: "",
+        description: "",
+        image: "",
+        hourFeed: [""],
+        doorTime: "",
+    });
+
+    const { user } = useClerk();
+
+    if (!user) {
+        return (
+            <CustomContainer>
+                <Message>
+                    Você precisa estar logado para ver os dispositivos.
+                </Message>
+            </CustomContainer>
+        );
+    }
+
+    useEffect(() => {
+        if (!deviceForm) {
+            setDevice({
+                email: "",
+                name: "",
+                description: "",
+                image: "",
+                hourFeed: [""],
+                doorTime: "",
+            });
+        }
+        if (deviceForm) {
+            setDevice({
+                name: deviceForm.name,
+                description: deviceForm.description,
+                image: deviceForm.image,
+                hourFeed: deviceForm.hourFeed,
+                doorTime: deviceForm.doorTime,
+            });
+        }
+    }, [deviceForm]);
+
+    const handleOnChangeDevice = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value } = e.target;
+        setDevice((prevDevice) => ({
+            ...prevDevice,
+            [name]: value,
+        }));
+    };
+
+    const handleOnChangeHourFeed = (
+        index: number,
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const newHourFeeds = [...device.hourFeed];
+        newHourFeeds[index] = e.target.value;
+        setDevice((prevDevice) => ({
+            ...prevDevice,
+            hourFeed: newHourFeeds,
+        }));
+    };
+
+    const addHourFeedField = () => {
+        setDevice((prevDevice) => ({
+            ...prevDevice,
+            hourFeed: [...prevDevice.hourFeed, ""],
+        }));
+    };
+
+    const removeHourFeedField = (index: number) => {
+        const newHourFeeds = device.hourFeed.filter((_, i) => i !== index);
+        setDevice((prevDevice) => ({
+            ...prevDevice,
+            hourFeed: newHourFeeds,
+        }));
+    };
+
+    const inputFileRef = createRef();
+
+    const cleanup = () => {
+        if (profileImage) {
+            URL.revokeObjectURL(profileImage);
+        }
+        inputFileRef.current.value = null;
+    };
+
+    const setImageUpload = (newImage: any) => {
+        if (profileImage) {
+            cleanup();
+        }
+        setImagePreview(newImage);
+    };
+
+    const handleImageChange = (e) => {
+        const newImage = e.target.files[0];
+        if (newImage) {
+            setProfileImage(newImage);
+            setImageUpload(URL.createObjectURL(newImage));
+        }
+    };
+
+    const uploadImage = async () => {
+        if (!profileImage) {
+            throw new Error("Nenhuma imagem selecionada.");
+        }
+
+        const formData = new FormData();
+        formData.append("file", profileImage);
+        formData.append("upload_preset", "wg69ohrd");
+
+        const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/wg69ohrd/image/upload",
+            formData,
+            {
+                params: {
+                    api_key: "475668981383711",
+                },
+            }
+        );
+
+        return response.data["secure_url"];
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try {
+            const imageUrl = await uploadImage();
+
+            const registerDevice: NewDeviceProps = {
+                ...device,
+                email: user?.emailAddresses[0].emailAddress,
+                image: imageUrl,
+            };
+
+            if (deviceForm?.name) {
+                const response = await axios.put(
+                    `${BASE_URL}/${deviceForm.id}`,
+                    registerDevice
+                );
+                console.log(response.data);
+            } else {
+                const response = await axios.post(
+                    `${BASE_URL}/create`,
+                    registerDevice
+                );
+                console.log(response.data);
+            }
+
+            toast.success("Cadastrado com sucesso!");
+            window.location.reload();
+        } catch (error) {
+            console.error("Erro ao fazer upload:", error);
+            toast.error("Algo deu errado");
+        }
+    };
+
+    return (
+        <FormContainer>
+            <FormTitulo>
+                Formulário para cadastro de um novo device. Todos os campos são
+                necessários.
+            </FormTitulo>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <FormLabel>Nome:</FormLabel>
+                    <FormInput
+                        id="nome"
+                        type="text"
+                        name="name"
+                        value={device.name}
+                        onChange={handleOnChangeDevice}
+                        required
+                    />
+                </div>
+                <div>
+                    <FormLabel htmlFor="description">Descrição:</FormLabel>
+                    <FormTextarea
+                        id="description"
+                        name="description"
+                        value={device.description}
+                        onChange={handleOnChangeDevice}
+                        required
+                    />
+                </div>
+                <div>
+                    <FormLabel>Horários (HH:mm):</FormLabel>
+                    {device.hourFeed.map((hourFeed, index) => (
+                        <div key={index} style={{ display: "flex" }}>
+                            <FormInput
+                                type="time"
+                                name={`hourFeed${index}`}
+                                value={hourFeed}
+                                onChange={(e) =>
+                                    handleOnChangeHourFeed(index, e)
+                                }
+                                required
+                            />
+                            {deviceForm?.name && (
+                                <DeleteButton
+                                    type="button"
+                                    onClick={() => removeHourFeedField(index)}
+                                >
+                                    <FaTimes />
+                                </DeleteButton>
+                            )}
+                        </div>
+                    ))}
+                    <AddHourButton type="button" onClick={addHourFeedField}>
+                        <FaPlus /> Adicionar horário
+                    </AddHourButton>
+                </div>
+                <div>
+                    <FormLabel htmlFor="doorTime">
+                        Tempo de Porta Aberta (s):
+                    </FormLabel>
+                    <FormInput
+                        id="doorTime"
+                        name="doorTime"
+                        type="text"
+                        value={device.doorTime}
+                        onChange={handleOnChangeDevice}
+                        required
+                    />
+                </div>
+                <div>
+                    <FormLabel htmlFor="image">Imagem:</FormLabel>
+                    <ImageUpload
+                        handleImageChange={handleImageChange}
+                        imagePreview={imagePreview}
+                        inputFileRef={inputFileRef}
+                    />
+                </div>
+                <FormButton type="submit">Salvar</FormButton>
+            </form>
+        </FormContainer>
+    );
+};
+
+export default NovoDevice;
