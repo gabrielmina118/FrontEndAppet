@@ -9,7 +9,7 @@ interface DeviceProps {
     image: string;
     name: string;
     createdAt: Date;
-    hourFeed: string;
+    hourFeed: string[];
     doorTime: string;
     amountFood:string;
 }

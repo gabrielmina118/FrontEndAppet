@@ -24,11 +24,11 @@ import ImageUpload from "../ImageUpload/ImageUpload";
 
 interface NewDeviceProps {
     email?: string;
-    name: string;
-    description: string;
-    image: string;
+    name?: string;
+    description?: string;
+    image?: string;
     hourFeed: string[];
-    doorTime: string;
+    doorTime?: string;
 }
 
 interface NovoDeviceProps {
@@ -36,7 +36,7 @@ interface NovoDeviceProps {
 }
 
 const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
-    const [profileImage, setProfileImage] = useState<File | null>(null);
+    const [profileImage, setProfileImage] = React.useState<string | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     const [device, setDevice] = useState<NewDeviceProps>({
@@ -49,6 +49,8 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
     });
 
     const { user } = useClerk();
+
+    console.log("device", device);
 
     if (!user) {
         return (
@@ -79,6 +81,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                 hourFeed: deviceForm.hourFeed,
                 doorTime: deviceForm.doorTime,
             });
+            setImagePreview(deviceForm.image);
         }
     }, [deviceForm]);
 
@@ -119,13 +122,15 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
         }));
     };
 
-    const inputFileRef = createRef();
+    const inputFileRef = createRef<HTMLInputElement>();
 
     const cleanup = () => {
         if (profileImage) {
             URL.revokeObjectURL(profileImage);
         }
-        inputFileRef.current.value = null;
+        if (inputFileRef.current) {
+            inputFileRef.current.value = "";
+        }
     };
 
     const setImageUpload = (newImage: any) => {
@@ -135,7 +140,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
         setImagePreview(newImage);
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChange = (e: any) => {
         const newImage = e.target.files[0];
         if (newImage) {
             setProfileImage(newImage);
@@ -144,25 +149,24 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
     };
 
     const uploadImage = async () => {
-        if (!profileImage) {
-            throw new Error("Nenhuma imagem selecionada.");
+
+        if (profileImage) {
+            const formData = new FormData();
+            formData.append("file", profileImage);
+            formData.append("upload_preset", "wg69ohrd");
+
+            const response = await axios.post(
+                "https://api.cloudinary.com/v1_1/wg69ohrd/image/upload",
+                formData,
+                {
+                    params: {
+                        api_key: "475668981383711",
+                    },
+                }
+            );
+
+            return response.data["secure_url"];
         }
-
-        const formData = new FormData();
-        formData.append("file", profileImage);
-        formData.append("upload_preset", "wg69ohrd");
-
-        const response = await axios.post(
-            "https://api.cloudinary.com/v1_1/wg69ohrd/image/upload",
-            formData,
-            {
-                params: {
-                    api_key: "475668981383711",
-                },
-            }
-        );
-
-        return response.data["secure_url"];
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -214,7 +218,6 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                         name="name"
                         value={device.name}
                         onChange={handleOnChangeDevice}
-                        required
                     />
                 </div>
                 <div>
@@ -224,7 +227,6 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                         name="description"
                         value={device.description}
                         onChange={handleOnChangeDevice}
-                        required
                     />
                 </div>
                 <div>
@@ -238,7 +240,6 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                                 onChange={(e) =>
                                     handleOnChangeHourFeed(index, e)
                                 }
-                                required
                             />
                             {deviceForm?.name && (
                                 <DeleteButton
@@ -264,7 +265,6 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                         type="text"
                         value={device.doorTime}
                         onChange={handleOnChangeDevice}
-                        required
                     />
                 </div>
                 <div>

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useClerk } from "@clerk/clerk-react";
 import axios from "axios";
 import { BASE_URL } from "../../utils/baseUrl";
 import useGetDevices from "../../hooks/useDevices";
-import { Input } from "../ui/input";
 import {
     CustomActionTd,
     CustomImage,
@@ -24,12 +23,6 @@ const Detalhes: React.FC<DetailProps> = ({ editDevice }) => {
     const email = user?.emailAddresses[0]?.emailAddress;
     const { devices, loading, error, setDevices } = useGetDevices(email!);
 
-    const [formData, setFormData] = useState({
-        id: "",
-        name: "",
-        hourFeed: "",
-    });
-
     const handleDelete = async (id: string) => {
         try {
             await axios.delete(`${BASE_URL}/${id}`);
@@ -39,12 +32,6 @@ const Detalhes: React.FC<DetailProps> = ({ editDevice }) => {
         }
     };
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -65,7 +52,7 @@ const Detalhes: React.FC<DetailProps> = ({ editDevice }) => {
                 </tr>
             </thead>
             <tbody>
-                {devices.map((device, idx) => (
+                {devices.map((device) => (
                     <tr key={device.id}>
                         <CustomTd>
                             <CustomImage
