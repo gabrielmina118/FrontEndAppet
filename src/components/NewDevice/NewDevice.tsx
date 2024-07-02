@@ -198,9 +198,6 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
             }
 
             toast.success("Cadastrado com sucesso!");
-            setTimeout(() => {
-                window.location.reload();
-            }, 5000);
         } catch (error) {
             console.error("Erro ao fazer upload:", error);
             toast.error("Algo deu errado");
