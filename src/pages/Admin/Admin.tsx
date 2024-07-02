@@ -34,7 +34,6 @@ const Admin = () => {
     });
 
     const editDevice = async (id: string) => {
-
         try {
             const response = await axios.get(`${BASE_URL}/getByid/${id}`);
             setDevice({
@@ -49,11 +48,10 @@ const Admin = () => {
             setActiveComponent("NovoDevice");
         } catch (err) {
             console.log(err);
-        } finally {
-            console.log(false);
         }
-        
     };
+
+    console.log("activeComponent", activeComponent);
 
     const renderComponent = () => {
         switch (activeComponent) {
@@ -62,7 +60,12 @@ const Admin = () => {
             case "Detalhes":
                 return <Detalhes editDevice={editDevice} />;
             case "NovoDevice":
-                return <NovoDevice deviceForm={deviceForm} />;
+                return (
+                    <NovoDevice
+                        deviceForm={deviceForm}
+                        setActiveComponent={setActiveComponent}
+                    />
+                );
             case "UsuarioLogado":
                 return <UsuarioLogado />;
             default:

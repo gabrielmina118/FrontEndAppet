@@ -32,10 +32,14 @@ interface NewDeviceProps {
 }
 
 interface NovoDeviceProps {
-    deviceForm: DeviceData | null; // deviceForm pode ser um dispositivo ou null
+    deviceForm: DeviceData | null;
+    setActiveComponent: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
+const NovoDevice: React.FC<NovoDeviceProps> = ({
+    deviceForm,
+    setActiveComponent,
+}) => {
     const [profileImage, setProfileImage] = React.useState<string | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -149,7 +153,6 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
     };
 
     const uploadImage = async () => {
-
         if (profileImage) {
             const formData = new FormData();
             formData.append("file", profileImage);
@@ -196,7 +199,9 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
             }
 
             toast.success("Cadastrado com sucesso!");
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 5000);
         } catch (error) {
             console.error("Erro ao fazer upload:", error);
             toast.error("Algo deu errado");
@@ -246,7 +251,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                                     type="button"
                                     onClick={() => removeHourFeedField(index)}
                                 >
-                                     +
+                                    +
                                 </DeleteButton>
                             )}
                         </div>
