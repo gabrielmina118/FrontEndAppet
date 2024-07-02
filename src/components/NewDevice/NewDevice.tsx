@@ -37,8 +37,7 @@ interface NovoDeviceProps {
 }
 
 const NovoDevice: React.FC<NovoDeviceProps> = ({
-    deviceForm,
-    setActiveComponent,
+    deviceForm
 }) => {
     const [profileImage, setProfileImage] = React.useState<string | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
