@@ -206,6 +206,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                  hourFeed: [""],
                  doorTime: "",
              });
+             setImagePreview("");
         } catch (error) {
             console.error("Erro ao fazer upload:", error);
             toast.error("Algo deu errado");
