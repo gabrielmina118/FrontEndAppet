@@ -17,7 +17,7 @@ import {
     DeleteButton,
     Message,
 } from "../MyDevices/styled";
-import { FaPlus, FaTimes } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 import { DeviceData } from "@/pages/Admin/Admin";
 import ImageUpload from "../ImageUpload/ImageUpload";
@@ -246,7 +246,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                                     type="button"
                                     onClick={() => removeHourFeedField(index)}
                                 >
-                                    <FaTimes />
+                                     +
                                 </DeleteButton>
                             )}
                         </div>

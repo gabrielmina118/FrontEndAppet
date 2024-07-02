@@ -46,16 +46,18 @@ export const FormTextarea = styled.textarea`
 `;
 
 export const FormButton = styled.button`
-    background-color: #4caf50;
-    color: white;
+    background-color: #252424;
+    color: yellow;
     padding: 12px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    margin-top: 10px;
+    width: 100%;
 
     &:hover {
-        background-color: #45a049;
+        background-color: #6f6f6f
     }
 `;

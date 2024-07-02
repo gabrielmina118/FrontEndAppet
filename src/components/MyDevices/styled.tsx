@@ -47,12 +47,11 @@ export const DeleteButton = styled.button`
     align-items: center;
     justify-content: center;
     width: 40px;
-    height: 40px;
+    height: 47px;
     margin-left: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #6e6e6e;
     cursor: pointer;
 
     &:hover {
