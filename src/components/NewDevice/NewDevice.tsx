@@ -29,6 +29,7 @@ interface NewDeviceProps {
     image?: string;
     hourFeed: string[];
     doorTime?: string;
+    mac?:string
 }
 
 interface NovoDeviceProps {
@@ -49,6 +50,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
         image: "",
         hourFeed: [""],
         doorTime: "",
+        mac:""
     });
 
     const { user } = useClerk();
@@ -74,6 +76,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                 image: "",
                 hourFeed: [""],
                 doorTime: "",
+                mac:""
             });
         }
         if (deviceForm) {
@@ -83,6 +86,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                 image: deviceForm.image,
                 hourFeed: deviceForm.hourFeed,
                 doorTime: deviceForm.doorTime,
+                mac: deviceForm.mac,
             });
             setImagePreview(deviceForm.image);
         }
@@ -221,6 +225,16 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
             </FormTitulo>
             <form onSubmit={handleSubmit}>
                 <div>
+                    <FormLabel>MAC/ID:</FormLabel>
+                    <FormInput
+                        id="mac"
+                        type="text"
+                        name="mac"
+                        value={device.mac}
+                        onChange={handleOnChangeDevice}
+                    />
+                </div>
+                <div>
                     <FormLabel>Nome:</FormLabel>
                     <FormInput
                         id="nome"
@@ -256,7 +270,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                                     type="button"
                                     onClick={() => removeHourFeedField(index)}
                                 >
-                                    +
+                                    X
                                 </DeleteButton>
                             )}
                         </div>

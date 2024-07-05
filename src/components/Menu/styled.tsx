@@ -46,7 +46,7 @@ export const MainNav = styled.nav`
     min-height: 5vh;
     display: flex;
     margin: auto;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     position: sticky;
 `;
@@ -54,7 +54,7 @@ export const MainNav = styled.nav`
 export const LogoMain = styled.div`
     display: flex;
     align-items: center;
-    margin-left: 10%;
+    
     img {
         height: 90px;
     }
@@ -79,7 +79,6 @@ export const ListMenu = styled.ul<ListMenuProps>`
     list-style: none;
     background-color: #58617b;
     position: absolute;
-    margin-right: 10%;
     top: 0;
     left: 0;
     right: 0;

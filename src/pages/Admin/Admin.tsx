@@ -20,6 +20,7 @@ export interface DeviceData {
     hourFeed: string[];
     doorTime: string;
     image: string;
+    mac?:string
 }
 
 const Admin = () => {
@@ -31,6 +32,7 @@ const Admin = () => {
         hourFeed: [""],
         doorTime: "",
         image: "",
+        mac:""
     });
 
     const editDevice = async (id: string) => {
