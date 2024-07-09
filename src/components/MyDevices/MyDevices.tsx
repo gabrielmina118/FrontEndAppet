@@ -65,9 +65,7 @@ const MeusDevices = () => {
                                     device.amountFood
                                 )}
                             >
-                                {device.amountFood
-                                    ? device.amountFood
-                                    : "BAIXO"}
+                                {device.amountFood}
                             </FoodQuantity>
                         </tr>
                     ))}
@@ -77,16 +75,16 @@ const MeusDevices = () => {
     );
 };
 
-function normalizeAmountFood(amountFood: string): "CHEIO" | "METADE" | "BAIXO" {
+function normalizeAmountFood(amountFood: string): "CHEIO" | "METADE" | "VAZIO" {
     const normalized = amountFood.toUpperCase();
     if (
         normalized === "CHEIO" ||
         normalized === "METADE" ||
-        normalized === "BAIXO"
+        normalized === "VAZIO"
     ) {
-        return normalized as "CHEIO" | "METADE" | "BAIXO";
+        return normalized as "CHEIO" | "METADE" | "VAZIO";
     } else {
-        return "BAIXO";
+        return "VAZIO";
     }
 }
 

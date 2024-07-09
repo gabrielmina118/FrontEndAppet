@@ -103,7 +103,7 @@ export const AddHourButton = styled.button`
 `;
 
 export interface FoodQuantityProps {
-    quantity: "CHEIO" | "METADE" | "BAIXO" | " - ";
+    quantity: "CHEIO" | "METADE" | "VAZIO" | " - ";
 }
 
 export const FoodQuantity = styled.td<FoodQuantityProps>`
@@ -116,7 +116,7 @@ export const FoodQuantity = styled.td<FoodQuantityProps>`
                 return "lightgreen";
             case "METADE":
                 return "#FFC000";
-            case "BAIXO":
+            case "VAZIO":
                 return "red";
             default:
                 return "inherit";
