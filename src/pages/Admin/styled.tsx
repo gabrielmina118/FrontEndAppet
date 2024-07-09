@@ -1,57 +1,62 @@
+import { Button } from "@/components/ui/button";
 import styled from "styled-components";
 
 export const AdminContainer = styled.div`
-    font-family: Arial, sans-serif;
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;
     margin-top: 30px;
     border-radius: 8px;
-    background-color: #6e6e6e;
+    background-color: #888888; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 `;
 
 export const AdminHeader = styled.div`
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
-    color: yellow;
+    color: #333; 
 `;
 
-export const AdminMenu = styled.ul`
+export const AdminMenu = styled.div`
     list-style-type: none;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
     margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        text-align: center;
+    }
 `;
 
-export const AdminMenuItem = styled.li`
-    cursor: pointer;
+export const AdminMenuItemButton = styled(Button)`
     padding: 10px 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc; 
     border-radius: 4px;
     margin: 5px;
+    background-color: #e0e0e0; 
+    color: #333;
     transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
 
     &:hover {
-        color: yellow;
-        text-decoration: underline;
+        background-color: #d1d1d1; 
+        color: #000;
     }
 
     &.active {
-        background-color: #252424;
-        color: yellow;
-        border-color: #252424;
+        background-color: #ffc000; 
+        color: white;
+        border-color: #ffc000;
     }
 `;
 
-
-
 export const AdminContent = styled.div`
     border-top: 1px solid #ddd;
-    /* padding-top: 20px; */
-    color: #fff;
+    color: #333; 
 
     table {
         width: 100%;
@@ -62,61 +67,15 @@ export const AdminContent = styled.div`
         td {
             padding: 10px;
             border: 1px solid #ddd;
-            /* text-align: left; */
         }
 
         th {
-            background-color: #444;
-            color: yellow;
+            background-color: #888888; 
+            color: #333; 
         }
 
         td {
-            background-color: #555;
+            background-color: #888888; 
         }
-
-        /* @media (max-width: 768px) {
-            display: block;
-            width: 100%;
-
-            thead,
-            tbody,
-            th,
-            td,
-            tr {
-                display: block;
-            }
-
-            th {
-                position: absolute;
-                 top: -9999px;
-                left: -9999px; 
-            }
-
-            tr {
-                border: 1px solid #ddd;
-                margin-bottom: 5px;
-            }
-
-            td {
-                border: none;
-                border-bottom: 1px solid #ddd;
-                position: relative;
-                padding-left: 50%;
-                text-align: right;
-            }
-
-            td:before {
-                content: attr(data-label);
-                position: absolute;
-                left: 10px;
-                width: calc(50% - 20px);
-                padding-right: 10px;
-                white-space: nowrap;
-                text-align: left;
-                font-weight: bold;
-                color: yellow;
-            }
-        } */
     }
 `;
-

@@ -5,8 +5,9 @@ const UsuarioLogado = () => {
     return (
         <div>
             <p>
-                <strong style={{color:"yellow"}}>Usuario logado: </strong> {user?.fullName} -{" "}
-                {user?.emailAddresses[0].emailAddress}
+                <strong style={{ color: "#FFC000" }}> Usuario logado: </strong>
+                {user?.fullName?.toUpperCase()} -{" "}
+                {user?.emailAddresses[0].emailAddress.toUpperCase()}
             </p>
         </div>
     );

@@ -1,1 +1,4 @@
-export const BASE_URL = "https://back-end-alimentador-pet.vercel.app/devices";
+export const BASE_URL =
+    "https://appet-o0wgkkcn4-rafaelbfs-projects.vercel.app/devices";
+export const deviceEditBase_URL =
+    "https://appet-o0wgkkcn4-rafaelbfs-projects.vercel.app/devices/getByMacAdress";

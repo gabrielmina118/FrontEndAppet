@@ -11,7 +11,8 @@ interface DeviceProps {
     createdAt: Date;
     hourFeed: string[];
     doorTime: string;
-    amountFood:string;
+    amountFood: string;
+    macAddress: string;
 }
 
 const useGetDevices = (email: string) => {
@@ -25,6 +26,7 @@ const useGetDevices = (email: string) => {
             setError(null);
             try {
                 const response = await axios.get(`${BASE_URL}/${email}`);
+                console.log("response",response)
                 setDevices(response.data);
             } catch (err: any) {
                 setError(err);
@@ -38,7 +40,7 @@ const useGetDevices = (email: string) => {
         }
     }, [email]);
 
-    return { devices, loading, error , setDevices };
+    return { devices, loading, error, setDevices };
 };
 
 export default useGetDevices;

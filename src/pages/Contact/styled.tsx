@@ -14,7 +14,7 @@ export const FormContainer = styled.div`
 export const FormTitulo = styled.h2`
     font-size: 28px;
     font-weight: bold;
-    color: yellow;
+    color: #ffc000;
     margin-bottom: 30px;
     text-align: center;
 `;

@@ -11,7 +11,7 @@ export const FooterText = styled.p`
     margin: 0;
 
     span {
-        color: yellow;
+        color: #ffc000;
         font-weight: bold;
     }
 `;

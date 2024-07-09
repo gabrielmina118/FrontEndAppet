@@ -40,7 +40,7 @@ export const PrimeiraLetra = styled.span`
 `;
 
 export const DescricaoH1 = styled.h1`
-    color: yellow;
+    color: #ffc000;
     font-weight: bold;
     font-size: 50px;
     @media (max-width: 768px) {

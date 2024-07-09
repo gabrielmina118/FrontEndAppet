@@ -12,9 +12,10 @@ import {
     IconButton,
 } from "./styled";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 interface DetailProps {
-    editDevice: (id: string) => void;
+    editDevice: (macAddress: string) => void;
 }
 
 const Detalhes: React.FC<DetailProps> = ({ editDevice }) => {
@@ -27,6 +28,7 @@ const Detalhes: React.FC<DetailProps> = ({ editDevice }) => {
         try {
             await axios.delete(`${BASE_URL}/${id}`);
             setDevices(devices.filter((device) => device.id !== id));
+            toast.success('Deletado com sucesso')
         } catch (error) {
             console.error("Error deleting device:", error);
         }
@@ -41,14 +43,16 @@ const Detalhes: React.FC<DetailProps> = ({ editDevice }) => {
         return <div>Error: {error}</div>;
     }
 
+    console.log("devices", devices);
+
     return (
         <CustomTable>
             <thead>
                 <tr>
-                    <CustomTh>Foto</CustomTh>
-                    <th>Device</th>
-                    <th>Horário</th>
-                    <th>Ações</th>
+                    <CustomTh>FOTO</CustomTh>
+                    <th>DEVICE</th>
+                    <th>HORÁRIOS</th>
+                    <th>AÇÕES</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,7 +70,7 @@ const Detalhes: React.FC<DetailProps> = ({ editDevice }) => {
                             {
                                 <>
                                     <IconButton
-                                        onClick={() => editDevice(device.id)}
+                                        onClick={() => editDevice(device.macAddress)}
                                     >
                                         <FaEdit />
                                     </IconButton>

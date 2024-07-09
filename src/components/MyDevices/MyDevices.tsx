@@ -34,16 +34,18 @@ const MeusDevices = () => {
         );
     }
 
+    console.log("devices", devices);
+
     return (
         <>
             <CustomTable>
                 <thead>
                     <tr>
-                        <CustomDeviceTh>Foto</CustomDeviceTh>
-                        <th>Device</th>
-                        <th>Horário</th>
-                        <th>Tempo do motor</th>
-                        <CustomDeviceTh>Quantidade de alimento</CustomDeviceTh>
+                        <CustomDeviceTh>FOTO</CustomDeviceTh>
+                        <th>DEVICE</th>
+                        <th>HORÁRIOS</th>
+                        <th>TEMPO DO MOTOR</th>
+                        <CustomDeviceTh>NÍVEL DE ALIMENTO</CustomDeviceTh>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,14 +77,14 @@ const MeusDevices = () => {
     );
 };
 
-function normalizeAmountFood(amountFood: string): "CHEIO" | "MEDIO" | "BAIXO" {
+function normalizeAmountFood(amountFood: string): "CHEIO" | "METADE" | "BAIXO" {
     const normalized = amountFood.toUpperCase();
     if (
         normalized === "CHEIO" ||
-        normalized === "MEDIO" ||
+        normalized === "METADE" ||
         normalized === "BAIXO"
     ) {
-        return normalized as "CHEIO" | "MEDIO" | "BAIXO";
+        return normalized as "CHEIO" | "METADE" | "BAIXO";
     } else {
         return "BAIXO";
     }

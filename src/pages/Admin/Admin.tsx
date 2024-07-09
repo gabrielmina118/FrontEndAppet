@@ -3,7 +3,7 @@ import {
     AdminContainer,
     AdminHeader,
     AdminMenu,
-    AdminMenuItem,
+    AdminMenuItemButton,
     AdminContent,
 } from "./styled";
 import MeusDevices from "../../components/MyDevices/MyDevices";
@@ -11,7 +11,7 @@ import Detalhes from "../../components/Details/Details";
 import NovoDevice from "../../components/NewDevice/NewDevice";
 import UsuarioLogado from "../../components/UserLogin/UserLogin";
 import axios from "axios";
-import { BASE_URL } from "@/utils/baseUrl";
+import { deviceEditBase_URL } from "@/utils/baseUrl";
 
 export interface DeviceData {
     id: string;
@@ -20,7 +20,7 @@ export interface DeviceData {
     hourFeed: string[];
     doorTime: string;
     image: string;
-    mac?:string
+    macAddress: string;
 }
 
 const Admin = () => {
@@ -32,12 +32,16 @@ const Admin = () => {
         hourFeed: [""],
         doorTime: "",
         image: "",
-        mac:""
+        macAddress: "",
     });
 
-    const editDevice = async (id: string) => {
+    const editDevice = async (macAddress: string) => {
         try {
-            const response = await axios.get(`${BASE_URL}/getByid/${id}`);
+            console.log("macAddress", macAddress);
+            const response = await axios.get(
+                `${deviceEditBase_URL}/${macAddress}`
+            );
+            console.log(response.data);
             setDevice({
                 id: response.data.id,
                 name: response.data.name,
@@ -45,15 +49,13 @@ const Admin = () => {
                 hourFeed: response.data.hourFeed,
                 doorTime: response.data.doorTime,
                 image: response.data.image,
+                macAddress: response.data.macAddress,
             });
-            console.log("id", id);
             setActiveComponent("NovoDevice");
         } catch (err) {
             console.log(err);
         }
     };
-
-    console.log("activeComponent", activeComponent);
 
     const renderComponent = () => {
         switch (activeComponent) {
@@ -79,34 +81,34 @@ const Admin = () => {
         <AdminContainer>
             <AdminHeader>Área Administrativa</AdminHeader>
             <AdminMenu>
-                <AdminMenuItem
+                <AdminMenuItemButton
                     className={
                         activeComponent === "MeusDevices" ? "active" : ""
                     }
                     onClick={() => setActiveComponent("MeusDevices")}
                 >
                     Meus Devices
-                </AdminMenuItem>
-                <AdminMenuItem
+                </AdminMenuItemButton>
+                <AdminMenuItemButton
                     className={activeComponent === "Detalhes" ? "active" : ""}
                     onClick={() => setActiveComponent("Detalhes")}
                 >
                     Detalhes
-                </AdminMenuItem>
-                <AdminMenuItem
+                </AdminMenuItemButton>
+                <AdminMenuItemButton
                     className={activeComponent === "NovoDevice" ? "active" : ""}
                     onClick={() => setActiveComponent("NovoDevice")}
                 >
                     Novo Device
-                </AdminMenuItem>
-                <AdminMenuItem
+                </AdminMenuItemButton>
+                <AdminMenuItemButton
                     className={
                         activeComponent === "UsuarioLogado" ? "active" : ""
                     }
                     onClick={() => setActiveComponent("UsuarioLogado")}
                 >
                     Usuário logado
-                </AdminMenuItem>
+                </AdminMenuItemButton>
             </AdminMenu>
             <AdminContent>{renderComponent()}</AdminContent>
         </AdminContainer>

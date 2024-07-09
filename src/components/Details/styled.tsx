@@ -58,7 +58,7 @@ export const IconButton = styled.button`
     cursor: pointer;
 
     &:hover {
-        color: yellow;
+        color: #ffc000;
     }
 
     &:last-child {

@@ -31,7 +31,7 @@ export const Imagem = styled.img`
 
 export const Titulo = styled.h1`
     font-weight: bold;
-    color: yellow;
+    color: #ffc000;
     @media (max-width: 768px) {
         font-size: 36px;
         text-align: center;

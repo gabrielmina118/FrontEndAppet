@@ -11,6 +11,7 @@ export const Label = styled.label`
     color: #6e6e6e;
     margin-bottom: 10px;
     display: block;
+    color:#fff;
 `;
 
 export const Input = styled.input`

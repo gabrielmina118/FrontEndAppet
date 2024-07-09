@@ -1,4 +1,5 @@
 import { FooterContainer, FooterText } from "./styled";
+
 const Footer = () => {
     return (
         <FooterContainer>

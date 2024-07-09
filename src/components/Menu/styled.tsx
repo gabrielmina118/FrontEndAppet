@@ -16,7 +16,7 @@ export const SignInButtonStyled = styled(ClerkSignInButton)`
     margin: 0;
 
     &:hover {
-        color: yellow;
+        color: #ffc000;
         text-decoration: underline;
         background-color: #58617b;
     }
@@ -54,7 +54,7 @@ export const MainNav = styled.nav`
 export const LogoMain = styled.div`
     display: flex;
     align-items: center;
-    
+
     img {
         height: 90px;
     }
@@ -65,7 +65,7 @@ export const LogoName = styled.div`
     color: inherit;
 
     span {
-        color: yellow;
+        color: #ffc000;
         font-weight: bold;
     }
 `;
@@ -108,7 +108,7 @@ export const ListMenu = styled.ul<ListMenuProps>`
         text-decoration: none;
 
         &:hover {
-            color: yellow;
+            color: #ffc000;
             text-decoration: underline;
         }
     }

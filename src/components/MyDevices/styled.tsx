@@ -50,12 +50,16 @@ export const DeleteButton = styled.button`
     height: 47px;
     margin-left: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid #4c4c4c;
     border-radius: 4px;
+    background-color: #616161;
     cursor: pointer;
+    color: #ffc000;
+    transition: filter 0.3s ease;
 
     &:hover {
-        background-color: #5e5e5e;
+        background-color: #7d7d7d;
+        color: #ffc000;
     }
 `;
 
@@ -71,11 +75,17 @@ export const CustomDeviceTd = styled.th`
     }
 `;
 
+export const HourComponent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+`;
+
 export const AddHourButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
+    width: 100px;
     height: 40px;
     margin-bottom: 10px;
     font-size: 16px;
@@ -83,16 +93,17 @@ export const AddHourButton = styled.button`
     border-radius: 4px;
     background-color: #616161;
     cursor: pointer;
-    color: yellow;
+    color: #ffc000;
     transition: filter 0.3s ease;
 
     &:hover {
-        filter: brightness(0.9);
+        background-color: #7d7d7d;
+        color: #ffc000;
     }
 `;
 
 export interface FoodQuantityProps {
-    quantity: "CHEIO" | "MEDIO" | "BAIXO" | " - ";
+    quantity: "CHEIO" | "METADE" | "BAIXO" | " - ";
 }
 
 export const FoodQuantity = styled.td<FoodQuantityProps>`
@@ -103,8 +114,8 @@ export const FoodQuantity = styled.td<FoodQuantityProps>`
         switch (props.quantity) {
             case "CHEIO":
                 return "lightgreen";
-            case "MEDIO":
-                return "yellow";
+            case "METADE":
+                return "#FFC000";
             case "BAIXO":
                 return "red";
             default:

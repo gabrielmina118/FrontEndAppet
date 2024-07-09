@@ -15,6 +15,7 @@ import {
     AddHourButton,
     CustomContainer,
     DeleteButton,
+    HourComponent,
     Message,
 } from "../MyDevices/styled";
 import { FaPlus } from "react-icons/fa";
@@ -29,7 +30,7 @@ interface NewDeviceProps {
     image?: string;
     hourFeed: string[];
     doorTime?: string;
-    mac?:string
+    macAddress: string;
 }
 
 interface NovoDeviceProps {
@@ -37,9 +38,7 @@ interface NovoDeviceProps {
     setActiveComponent: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const NovoDevice: React.FC<NovoDeviceProps> = ({
-    deviceForm
-}) => {
+const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
     const [profileImage, setProfileImage] = React.useState<string | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -50,12 +49,12 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
         image: "",
         hourFeed: [""],
         doorTime: "",
-        mac:""
+        macAddress: "",
     });
 
     const { user } = useClerk();
 
-    console.log("device", device);
+    console.log("deviceForm", deviceForm);
 
     if (!user) {
         return (
@@ -76,7 +75,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                 image: "",
                 hourFeed: [""],
                 doorTime: "",
-                mac:""
+                macAddress: "",
             });
         }
         if (deviceForm) {
@@ -86,7 +85,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                 image: deviceForm.image,
                 hourFeed: deviceForm.hourFeed,
                 doorTime: deviceForm.doorTime,
-                mac: deviceForm.mac,
+                macAddress: deviceForm.macAddress,
             });
             setImagePreview(deviceForm.image);
         }
@@ -202,15 +201,17 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
             }
 
             toast.success("Cadastrado com sucesso!");
-             setDevice({
-                 email: "",
-                 name: "",
-                 description: "",
-                 image: "",
-                 hourFeed: [""],
-                 doorTime: "",
-             });
-             setImagePreview("");
+            setDevice({
+                email: "",
+                name: "",
+                description: "",
+                image: "",
+                hourFeed: [""],
+                doorTime: "",
+                macAddress: "",
+            });
+            setImagePreview("");
+            setProfileImage("");
         } catch (error) {
             console.error("Erro ao fazer upload:", error);
             toast.error("Algo deu errado");
@@ -220,18 +221,18 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
     return (
         <FormContainer>
             <FormTitulo>
-                Formulário para cadastro de um novo device. Todos os campos são
-                necessários.
+                Cadastro de um novo device
             </FormTitulo>
             <form onSubmit={handleSubmit}>
                 <div>
                     <FormLabel>MAC/ID:</FormLabel>
                     <FormInput
-                        id="mac"
+                        id="macAddress"
                         type="text"
-                        name="mac"
-                        value={device.mac}
+                        name="macAddress"
+                        value={device.macAddress}
                         onChange={handleOnChangeDevice}
+                        required
                     />
                 </div>
                 <div>
@@ -242,6 +243,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                         name="name"
                         value={device.name}
                         onChange={handleOnChangeDevice}
+                        required
                     />
                 </div>
                 <div>
@@ -251,6 +253,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                         name="description"
                         value={device.description}
                         onChange={handleOnChangeDevice}
+                        required
                     />
                 </div>
                 <div>
@@ -264,8 +267,10 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                                 onChange={(e) =>
                                     handleOnChangeHourFeed(index, e)
                                 }
+                                required
                             />
-                            {deviceForm?.name && (
+
+                            {index >= 1 && (
                                 <DeleteButton
                                     type="button"
                                     onClick={() => removeHourFeedField(index)}
@@ -275,13 +280,15 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                             )}
                         </div>
                     ))}
-                    <AddHourButton type="button" onClick={addHourFeedField}>
-                        <FaPlus /> Adicionar horário
-                    </AddHourButton>
+                    <HourComponent>
+                        <AddHourButton type="button" onClick={addHourFeedField}>
+                            <FaPlus />
+                        </AddHourButton>
+                    </HourComponent>
                 </div>
                 <div>
                     <FormLabel htmlFor="doorTime">
-                        Tempo de Porta Aberta (s):
+                        Tempo de Porta Aberta (em segundos):
                     </FormLabel>
                     <FormInput
                         id="doorTime"
@@ -289,6 +296,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({
                         type="text"
                         value={device.doorTime}
                         onChange={handleOnChangeDevice}
+                        required
                     />
                 </div>
                 <div>
