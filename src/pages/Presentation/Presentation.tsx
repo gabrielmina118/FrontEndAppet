@@ -10,7 +10,6 @@ import {
 } from "./styled";
 import Pet from "../../assets/pet.png";
 import { useCallback, useState } from "react";
-import { text } from "stream/consumers";
 import DownloadLink from "@/components/DownloadPDF/DownloadPDF";
 
 const Presentation = () => {
