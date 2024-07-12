@@ -18,7 +18,10 @@ interface MenuItem {
 }
 
 const Menu = () => {
+
+    // Verificar se o usuario esta logado
     const { isSignedIn } = useUser();
+    
     const [open, setOpen] = useState(false);
 
     const menuItems: MenuItem[] = [

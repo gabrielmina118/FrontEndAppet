@@ -220,9 +220,7 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
 
     return (
         <FormContainer>
-            <FormTitulo>
-                Cadastro de um novo device
-            </FormTitulo>
+            <FormTitulo>Cadastro de um novo device</FormTitulo>
             <form onSubmit={handleSubmit}>
                 <div>
                     <FormLabel>MAC/ID:</FormLabel>
@@ -253,7 +251,6 @@ const NovoDevice: React.FC<NovoDeviceProps> = ({ deviceForm }) => {
                         name="description"
                         value={device.description}
                         onChange={handleOnChangeDevice}
-                        required
                     />
                 </div>
                 <div>

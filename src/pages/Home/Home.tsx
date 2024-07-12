@@ -7,6 +7,7 @@ import {
     DescricaoH1,
     DescricaoTexto,
 } from "./styled";
+
 import Pet from '../../assets/pet.png'
 
 const Home = () => {

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
+
 import { ClerkProvider } from "@clerk/clerk-react";
 import GlobalState from "./Global.tsx";
 import ToasterProvider from "./utils/ToasterProvider.tsx";

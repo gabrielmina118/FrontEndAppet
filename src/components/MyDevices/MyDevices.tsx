@@ -13,7 +13,9 @@ import useGetDevices from "../../hooks/useDevices";
 const MeusDevices = () => {
     const { user } = useClerk();
 
+    // Buscar o email do usuario logado
     const email = user?.emailAddresses[0]?.emailAddress;
+    // Buscar os devices
     const { devices, loading, error } = useGetDevices(email!);
 
     if (loading) {
